@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Track List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Search.html">Search</a></li>
+        <li><a href="Artists.html">Artists</a></li>
+        <li><a href="Tracks.html" class="active">Tracks</a></li>
+      </ul>
+    </nav>
+    <h1>Track List</h1>
+
+    <p>
+      This page will display a list of tracks and albums based on what you
+      search. You can search things to add to the list using the input field
+      below.
+    </p>
+
+    <div id="track-list-container"></div>
+
+    <div class="input-area">
+      <input type="text" id="track-input" placeholder="Add a new track..." />
+      <button id="add-track-button">Add Track</button>
+      <button id="clear-button">Clear Results</button>
+    </div>
+
+    <div class="results-box">
+      <h3>Search Results</h3>
+      <div id="api-results-container"></div>
+    </div>
+  </body>
+</html>

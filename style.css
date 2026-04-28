@@ -1,0 +1,111 @@
+/* Navigation Bar Styling */
+nav {
+  background-color: #333;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav li {
+  margin: 0;
+  flex: 1;
+}
+
+nav a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+nav a:hover {
+  background-color: black;
+}
+
+nav a.active {
+  background-color: #4CAF50;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-top: 20px;
+  text-align: center;
+}
+p {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.input-area {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#notes-container,
+#search-results-container,
+#track-list-container {
+  margin: 20px;
+}
+
+.results-box {
+  margin: 20px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  min-height: 200px;
+}
+
+.results-box h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+}
+
+#api-results-container {
+  margin: 0;
+}

@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="Search.html" class="active">Search</a></li>
+        <li><a href="Artists.html">Artists</a></li>
+        <li><a href="Tracks.html">Tracks</a></li>
+      </ul>
+    </nav>
+    <h1>Search Results</h1>
+
+    <p>
+      This page will display the search results based on your query. You can
+      search for artists, tracks, albums, and more using the input field below.
+    </p>
+
+    <div id="search-results-container"></div>
+
+    <div class="input-area">
+      <input type="text" id="search-input" placeholder="Search for notes..." />
+      <button id="search-button">Search</button>
+      <button id="clear-button">Clear Results</button>
+    </div>
+
+    <div class="results-box">
+      <h3>Search Results</h3>
+      <div id="api-results-container"></div>
+    </div>
+  </body>
+</html>
