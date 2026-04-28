@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     <title>Search Results</title>
@@ -12,17 +13,13 @@
         <li><a href="Tracks.html">Tracks</a></li>
       </ul>
     </nav>
+
     <h1>Search Results</h1>
 
-    <p>
-      This page will display the search results based on your query. You can
-      search for artists, tracks, albums, and more using the input field below.
-    </p>
-
-    <div id="search-results-container"></div>
+    <p>Search for artists, tracks, and albums using the Spotify API.</p>
 
     <div class="input-area">
-      <input type="text" id="search-input" placeholder="Search for notes..." />
+      <input type="text" id="search-input" placeholder="Search Spotify..." />
       <button id="search-button">Search</button>
       <button id="clear-button">Clear Results</button>
     </div>
@@ -31,5 +28,7 @@
       <h3>Search Results</h3>
       <div id="api-results-container"></div>
     </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

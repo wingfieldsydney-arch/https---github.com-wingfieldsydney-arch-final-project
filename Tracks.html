@@ -1,6 +1,7 @@
+<!doctype html>
 <html>
   <head>
-    <title>Track List</title>
+    <title>Tracks</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -12,25 +13,22 @@
         <li><a href="Tracks.html" class="active">Tracks</a></li>
       </ul>
     </nav>
+
     <h1>Track List</h1>
 
-    <p>
-      This page will display a list of tracks and albums based on what you
-      search. You can search things to add to the list using the input field
-      below.
-    </p>
-
-    <div id="track-list-container"></div>
+    <p>Search for songs and view track information from Spotify.</p>
 
     <div class="input-area">
-      <input type="text" id="track-input" placeholder="Add a new track..." />
-      <button id="add-track-button">Add Track</button>
+      <input type="text" id="track-input" placeholder="Enter track name..." />
+      <button id="add-track-button">Search Track</button>
       <button id="clear-button">Clear Results</button>
     </div>
 
     <div class="results-box">
-      <h3>Search Results</h3>
+      <h3>Track Results</h3>
       <div id="api-results-container"></div>
     </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
