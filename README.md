@@ -11,3 +11,5 @@ Search Page Search bar for artists, albums, or songs Display results from the Sp
 Artist Page Detailed information about a selected artist Artist image, genres, and top tracks
 Album / Track Page Album details (cover, tracklist) Song previews (if available) Release information
 Favorites / Saved Page Users can view saved songs or artists (Optional: stored locally using browser storage or Firebase) AI Usage Log We used AI tools to assist with brainstorming ideas, structuring our planning document, and improving clarity in writing. AI was also used to help generate descriptions, organize content, and guide development decisions. All code, design, and implementation will be reviewed and modified by our team to ensure understanding and originality. AI is being used as a support tool, not as a replacement for our work.
+
+Link: https://wingfieldsydney-arch.github.io/https---github.com-wingfieldsydney-arch-final-project/
