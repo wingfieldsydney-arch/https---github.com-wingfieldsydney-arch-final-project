@@ -8,12 +8,12 @@ body {
   font-family: Arial, sans-serif;
   background-color: #82dc85;
   color: #222;
+  min-height: 100vh;
 }
 
 /* Navigation */
 nav {
   background-color: #191414;
-  padding: 0;
 }
 
 nav ul {
@@ -21,6 +21,7 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
 }
 
 nav li {
@@ -39,10 +40,9 @@ nav a {
 nav a:hover,
 nav a.active {
   background-color: #1db954;
-  color: white;
 }
 
-/* Main text */
+/* Text */
 h1 {
   text-align: center;
   margin: 30px 20px 10px;
@@ -56,6 +56,15 @@ p {
   text-align: center;
   font-size: 20px;
   line-height: 1.5;
+}
+
+/* Logo */
+.spotify-logo,
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 220px;
+  height: auto;
 }
 
 /* Input area */
@@ -91,7 +100,7 @@ button:hover {
   background-color: #159c46;
 }
 
-/* Results box */
+/* White boxes */
 .results-box {
   max-width: 1000px;
   margin: 30px auto;
@@ -99,24 +108,16 @@ button:hover {
   border-radius: 12px;
   background-color: white;
   border: 1px solid #ddd;
-  min-height: 200px;
 }
 
 .results-box h3 {
+  text-align: center;
   margin-top: 0;
-  text-align: center;
-  font-size: 24px;
 }
 
-/* API results */
-#api-results-container h2 {
-  text-align: center;
-  margin-top: 30px;
-  color: #191414;
-}
-
+/* Cards */
 .result-card {
-  background-color: #fafafa;
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 18px;
@@ -130,12 +131,10 @@ button:hover {
   height: 180px;
   object-fit: cover;
   border-radius: 10px;
-  background-color: #ddd;
 }
 
 .result-card h3 {
   margin: 12px 0 8px;
-  color: #191414;
 }
 
 .result-card p {
@@ -144,8 +143,6 @@ button:hover {
 }
 
 .result-card a {
-  display: inline-block;
-  margin-top: 10px;
   color: #1db954;
   font-weight: bold;
   text-decoration: none;
@@ -153,6 +150,49 @@ button:hover {
 
 .result-card a:hover {
   text-decoration: underline;
+}
+
+/* Contact */
+.contact-section {
+  max-width: 700px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.contact-title {
+  text-align: center;
+  font-size: 36px;
+}
+
+.form-group-container {
+  display: grid;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+.form-input,
+.form-textarea {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-textarea {
+  min-height: 120px;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 15px;
 }
 
 /* Mobile */
@@ -174,93 +214,8 @@ button:hover {
     align-items: center;
   }
 
-  button,
-  input {
+  input,
+  button {
     width: 90%;
   }
-}
-
-.contact-section {
-  width: 100%;
-  max-width: 40rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem 1rem;
-}
-
-.contact-intro > * + * {
-  margin-top: 1rem;
-}
-
-.contact-title {
-  font-size: 2.25rem;
-  line-height: 2.25rem;
-  font-weight: 700;
-  color: #fff;
-  font-family: sans-serif;
-  color: #1ed760;
-}
-
-.contact-description {
-  color: #000;
-  font-family: sans-serif;
-}
-
-.form-group-container {
-  display: grid;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-label {
-  margin-bottom: 0.5rem;
-}
-
-.form-input,
-.form-textarea {
-  padding: 0.5rem;
-  border: 1px solid #000;
-  display: flex;
-  height: 2.5rem;
-  width: 100%;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.form-input::placeholder,
-.form-textarea:focus-visible {
-  color: #6b7280;
-}
-
-.form-input:focus-visible,
-.form-textarea:focus-visible {
-  outline: 2px solid #1ed760;
-  outline-offset: 2px;
-}
-
-.form-textarea {
-  min-height: 120px;
-}
-
-.form-submit {
-  width: 100%;
-  margin-top: 1.2rem;
-  background-color: #1ed760;
-  color: #000;
-  padding: 13px 5px;
-  border-radius: 0.375rem;
-  font-family: sans-serif;
-}
-
-img{
-  display: block;
-  margin: 20px auto;
-  max-width: 200px;
-  height: 200px:
 }

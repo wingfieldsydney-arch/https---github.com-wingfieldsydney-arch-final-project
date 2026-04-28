@@ -1,9 +1,3 @@
-// ===============================
-// SPOTIFY + FIREBASE FINAL PROJECT
-// Save as: script.js
-// ===============================
-
-// ---------- FIREBASE IMPORTS ----------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -16,8 +10,7 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ---------- FIREBASE CONFIG ----------
-// Replace with YOUR Firebase values
+// Replace this with your Firebase config
 const firebaseConfig = {
   apiKey: "PASTE_API_KEY",
   authDomain: "PASTE_AUTH_DOMAIN",
@@ -31,11 +24,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const favoritesCollection = collection(db, "favorites");
 
-// ---------- SPOTIFY SETTINGS ----------
+// Replace this with your Spotify Client ID
 const clientId = "PASTE_SPOTIFY_CLIENT_ID";
-const redirectUri = "http://127.0.0.1:5501/Home.html";
 
-// ---------- LOGIN BUTTON ----------
+const redirectUri = "http://127.0.0.1:5501/index.html";
+
+// Spotify login
 function createLoginButton() {
   if (localStorage.getItem("spotifyToken")) return;
 
@@ -54,7 +48,7 @@ function createLoginButton() {
   document.body.insertBefore(btn, document.body.children[1]);
 }
 
-// ---------- GET TOKEN ----------
+// Get Spotify token
 function getToken() {
   if (window.location.hash) {
     const hash = window.location.hash.substring(1);
@@ -63,14 +57,14 @@ function getToken() {
 
     if (token) {
       localStorage.setItem("spotifyToken", token);
-      window.location.href = "Home.html";
+      window.location.href = "index.html";
     }
   }
 
   return localStorage.getItem("spotifyToken");
 }
 
-// ---------- SPOTIFY SEARCH ----------
+// Spotify API fetch
 async function searchSpotify(query, type) {
   const token = getToken();
 
@@ -90,10 +84,11 @@ async function searchSpotify(query, type) {
     );
 
     if (!response.ok) {
-      throw new Error("Spotify API failed");
+      throw new Error("Spotify API request failed.");
     }
 
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.log(error);
     alert("Could not load Spotify data.");
@@ -101,7 +96,44 @@ async function searchSpotify(query, type) {
   }
 }
 
-// ---------- DISPLAY RESULTS ----------
+// Home page popular tracks
+async function loadHomeTracks() {
+  const container = document.getElementById("home-tracks-container");
+  if (!container) return;
+
+  const data = await searchSpotify("top hits", "track");
+
+  if (!data) {
+    container.innerHTML = "<p>Login to Spotify to see popular tracks.</p>";
+    return;
+  }
+
+  container.innerHTML = "";
+
+  data.tracks.items.forEach(track => {
+    const card = document.createElement("div");
+    card.className = "result-card";
+
+    const image = track.album.images[0]?.url || "";
+
+    card.innerHTML = `
+      <img src="${image}" alt="${track.name}">
+      <h3>${track.name}</h3>
+      <p>${track.artists.map(artist => artist.name).join(", ")}</p>
+      <a href="${track.external_urls.spotify}" target="_blank">Listen on Spotify</a>
+      <br><br>
+      <button>Add Favorite</button>
+    `;
+
+    card.querySelector("button").addEventListener("click", async () => {
+      await addFavorite(track.name, "Track");
+    });
+
+    container.appendChild(card);
+  });
+}
+
+// Display tracks
 function showTracks(tracks) {
   const container = document.getElementById("api-results-container");
   if (!container) return;
@@ -115,9 +147,12 @@ function showTracks(tracks) {
     const image = track.album.images[0]?.url || "";
 
     card.innerHTML = `
-      <img src="${image}">
+      <img src="${image}" alt="${track.name}">
       <h3>${track.name}</h3>
-      <p>${track.artists.map(a => a.name).join(", ")}</p>
+      <p>${track.artists.map(artist => artist.name).join(", ")}</p>
+      <p>Album: ${track.album.name}</p>
+      <a href="${track.external_urls.spotify}" target="_blank">Listen on Spotify</a>
+      <br><br>
       <button>Add Favorite</button>
     `;
 
@@ -129,6 +164,7 @@ function showTracks(tracks) {
   });
 }
 
+// Display artists
 function showArtists(artists) {
   const container = document.getElementById("api-results-container");
   if (!container) return;
@@ -142,9 +178,12 @@ function showArtists(artists) {
     const image = artist.images[0]?.url || "";
 
     card.innerHTML = `
-      <img src="${image}">
+      <img src="${image}" alt="${artist.name}">
       <h3>${artist.name}</h3>
-      <p>Followers: ${artist.followers.total}</p>
+      <p>Followers: ${artist.followers.total.toLocaleString()}</p>
+      <p>Genres: ${artist.genres.join(", ") || "No genres listed"}</p>
+      <a href="${artist.external_urls.spotify}" target="_blank">Open on Spotify</a>
+      <br><br>
       <button>Add Favorite</button>
     `;
 
@@ -156,20 +195,24 @@ function showArtists(artists) {
   });
 }
 
-// ---------- FIREBASE CRUD ----------
-
-// CREATE
+// Create favorite
 async function addFavorite(name, type) {
-  await addDoc(favoritesCollection, {
-    name: name,
-    type: type,
-    note: "Favorite item"
-  });
+  try {
+    await addDoc(favoritesCollection, {
+      name: name,
+      type: type,
+      note: "Favorite item"
+    });
 
-  loadFavorites();
+    alert("Added to favorites!");
+    loadFavorites();
+  } catch (error) {
+    console.log(error);
+    alert("Could not add favorite.");
+  }
 }
 
-// READ
+// Read favorites
 async function loadFavorites() {
   let container = document.getElementById("favorites-container");
 
@@ -180,56 +223,66 @@ async function loadFavorites() {
       <h3>Favorites</h3>
       <div id="favorites-container"></div>
     `;
+
     document.body.appendChild(box);
     container = document.getElementById("favorites-container");
   }
 
   container.innerHTML = "";
 
-  const snapshot = await getDocs(favoritesCollection);
+  try {
+    const snapshot = await getDocs(favoritesCollection);
 
-  snapshot.forEach(item => {
-    const data = item.data();
+    if (snapshot.empty) {
+      container.innerHTML = "<p>No favorites added yet.</p>";
+      return;
+    }
 
-    const card = document.createElement("div");
-    card.className = "result-card";
+    snapshot.forEach(item => {
+      const data = item.data();
 
-    card.innerHTML = `
-      <h3>${data.name}</h3>
-      <p>${data.type}</p>
-      <p>${data.note}</p>
-      <button class="editBtn">Edit</button>
-      <button class="deleteBtn">Delete</button>
-    `;
+      const card = document.createElement("div");
+      card.className = "result-card";
 
-    // UPDATE
-    card.querySelector(".editBtn").addEventListener("click", async () => {
-      const newNote = prompt("New note:", data.note);
+      card.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>Type: ${data.type}</p>
+        <p>Note: ${data.note}</p>
+        <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
+      `;
 
-      if (newNote) {
-        await updateDoc(doc(db, "favorites", item.id), {
-          note: newNote
-        });
+      card.querySelector(".editBtn").addEventListener("click", async () => {
+        const newNote = prompt("Edit your note:", data.note);
 
+        if (newNote) {
+          await updateDoc(doc(db, "favorites", item.id), {
+            note: newNote
+          });
+
+          loadFavorites();
+        }
+      });
+
+      card.querySelector(".deleteBtn").addEventListener("click", async () => {
+        await deleteDoc(doc(db, "favorites", item.id));
         loadFavorites();
-      }
-    });
+      });
 
-    // DELETE
-    card.querySelector(".deleteBtn").addEventListener("click", async () => {
-      await deleteDoc(doc(db, "favorites", item.id));
-      loadFavorites();
+      container.appendChild(card);
     });
-
-    container.appendChild(card);
-  });
+  } catch (error) {
+    console.log(error);
+    container.innerHTML = "<p>Could not load favorites.</p>";
+  }
 }
 
-// ---------- PAGE BUTTONS ----------
-document.addEventListener("DOMContentLoaded", () => {
+// Page setup
+document.addEventListener("DOMContentLoaded", async () => {
   createLoginButton();
   getToken();
   loadFavorites();
+  loadHomeTracks();
 
   const searchBtn = document.getElementById("search-button");
   const trackBtn = document.getElementById("add-track-button");
@@ -237,7 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (searchBtn) {
     searchBtn.addEventListener("click", async () => {
-      const query = document.getElementById("search-input").value;
+      const input = document.getElementById("search-input");
+      const query = input.value.trim();
+
+      if (query === "") {
+        alert("Please enter something to search.");
+        return;
+      }
 
       if (window.location.pathname.toLowerCase().includes("artists")) {
         const data = await searchSpotify(query, "artist");
@@ -251,9 +310,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (trackBtn) {
     trackBtn.addEventListener("click", async () => {
-      const query = document.getElementById("track-input").value;
-      const data = await searchSpotify(query, "track");
+      const input = document.getElementById("track-input");
+      const query = input.value.trim();
 
+      if (query === "") {
+        alert("Please enter a track name.");
+        return;
+      }
+
+      const data = await searchSpotify(query, "track");
       if (data) showTracks(data.tracks.items);
     });
   }
